@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-image: url('sddefault_cleanup.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .timer-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: black;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .timer-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 10px;
+    }
+
+    .timer-section div {
+      font-size: 2em;
+      margin: 5px;
+      padding: 10px;
+      color: white;
+    }
+
+    .timer-section span {
+      font-size: 1em;
+      margin-top: 5px;
+      color: white;
+    }
+
+    .button-container {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    button {
+      flex: 1;
+      font-size: 1em;
+      margin: 5px;
+      padding: 10px;
+      cursor: pointer;
+      color: white;
+      background-color: red;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="timer-box">
+    <div class="timer-section">
+      <span>Hours</span>
+      <div id="hours">00</div>
+    </div>
+    <div>|</div>
+    <div class="timer-section">
+      <span>Minutes</span>
+      <div id="minutes">00</div>
+    </div>
+    <div>|</div>
+    <div class="timer-section">
+      <span>Seconds</span>
+      <div id="seconds">00</div>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <button onclick="resetTimer()">Reset</button>
+  </div>
+
+  <script>
+    let timer;
+    let timeInSeconds = 300; 
+
+    function startTimer() {
+      if (!timer) {
+        timer = setInterval(updateTimer, 1000);
+      }
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = null;
+      timeInSeconds = 300; 
+      updateTimer(); 
+    }
+
+    function updateTimer() {
+      const hours = Math.floor(timeInSeconds / 3600);
+      const minutes = Math.floor((timeInSeconds % 3600) / 60);
+      const seconds = timeInSeconds % 60;
+
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+      if (timeInSeconds > 0) {
+        timeInSeconds--;
+      } else {
+        clearInterval(timer);
+        alert("Time's up!");
+      }
+    }
+  </script>
+
+</body>
+</html>
